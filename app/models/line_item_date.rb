@@ -1,5 +1,6 @@
 class LineItemDate < ApplicationRecord
   belongs_to :quote
+  has_many :line_items, dependant: :destroy
   validates :date, uniqueness: { scope: :quote_id}
 
   scope :ordered, -> { order(date: :asc) }
