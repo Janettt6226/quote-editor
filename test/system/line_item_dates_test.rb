@@ -1,6 +1,11 @@
 require "application_system_test_case"
 
 class LineItemDatesTest < ApplicationSystemTestCase
+
+  # We must include this module to be able to use the
+  # `number_to_currency` method in our test
+  include ActionView::Helpers::NumberHelper
+
   setup do
     login_as users(:accountant)
     @quote = quotes(:first)
@@ -45,5 +50,7 @@ class LineItemDatesTest < ApplicationSystemTestCase
     end
 
     assert_no_text I18n.l(Date.current, format: :long)
+
+    assert_text number_to_currency(@quote.total_price)
   end
 end
